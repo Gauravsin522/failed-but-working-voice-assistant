@@ -24,27 +24,18 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import openai
 
-
-
-
-# Context memory for storing previous interactions
 context_memory = {}
 user_data_file="user_data.json"
 
-
-
-
-# Initialize the text-to-speech engine
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[1].id)  # Female voice
-engine.setProperty('rate', 150)  # Speed
-engine.setProperty('volume', 1.0)  # Volume
+engine.setProperty('voice', voices[1].id) 
+engine.setProperty('rate', 150)  
+engine.setProperty('volume', 1.0) 
 
 def speak(text):
     engine.say(text)
     engine.runAndWait()
-# Initialize the speech recognizer
 recognizer = sr.Recognizer()
 
 def recognize_speech():
@@ -64,8 +55,7 @@ def recognize_speech():
 
     
 
-# Set up your OpenAI API Key
-openai.api_key = "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"
+openai.api_key = "add your api i don't give my api"
 
 def chat_with_gpt(prompt):
     response = openai.ChatCompletion.create(
@@ -89,11 +79,11 @@ def recognize_speech():
         except sr.RequestError:
             speak("Network error. Please check your internet connection.")
 
-command = recognize_speech()  # Ensure it's called
+command = recognize_speech() 
 if "chat mode" in command or "talk to me" in command:
     speak("Sure! What would you like to talk about?")
     while True:
-        user_input = recognize_speech()  # Ensure this is called too
+        user_input = recognize_speech()  #
         if "exit chat" in user_input or "stop talking" in user_input:
             speak("Exiting chat mode.")
             break
@@ -129,7 +119,7 @@ def save_user_data(data):
     
 def send_email(receiver_email, subject,message):
     sender_email = "gauravfuunn@gmail.com"
-    sender_password = "*******"  # Replace with your email password
+    sender_password = "*******"  
     
     msg=MIMEMultipart()
     msg['From']=sender_email
@@ -153,8 +143,7 @@ def email_assistant():
     speak("Please tell me the recipient's email address.")
     recipient_email = recognize_speech()
     if recipient_email:
-        receiver_email = recipient_email.replace(" ", "")+"@gmail.com"  # Assuming Gmail for simplicity
-        speak("What is the subject of the email?")
+        receiver_email = recipient_email.replace(" ", "")+"@gmail.com" 
         subject = recognize_speech()
         
         speak("What is the message you want to send?")
@@ -164,7 +153,7 @@ def email_assistant():
             
 
 def get_news():
-    api_key = "aee28e8736ad4aab896c56fb2f3593d8"  # Replace with your NewsAPI key
+    api_key = "aee28e8736ad4aab896c56fb2f3593d8" 
     url = f"https://newsapi.org/v2/top-headlines?country=in&apiKey={api_key}"
     response = requests.get(url).json()
 
@@ -177,7 +166,7 @@ def get_news():
         speak("Sorry, I couldn't fetch the news at the moment.")
 
 def get_weather(city="Delhi"):
-    api_key = "90e187b1983f4d3e977103649252403"  # Replace with your OpenWeatherMap API key
+    api_key = "90e187b1983f4d3e977103649252403"  
     url = f"http://api.openweathermap.org/data/2.5/weather?q={quote(city)}&appid={api_key}&units=metric"
     response = requests.get(url).json()
 
