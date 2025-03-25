@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Assistant</title>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js"></script>
+</head>
+<body>
+    <h1>Voice Assistant</h1>
+    <button onclick="startListening()">Listen</button>
+    <button onclick="speakText()">Speak</button>
+    <p id="output">Say something...</p>
+
+    <script>
+        async function startListening() {
+            let pyodide = await loadPyodide();
+            await pyodide.loadPackage(["micropip"]);
+            await pyodide.runPythonAsync(`
+                from voice_assistant import recognize_speech
+                text = recognize_speech()
+                text
+            `);
+            document.getElementById("output").innerText = "You said: " + text;
+        }
+
+        async function speakText() {
+            let text = document.getElementById("output").innerText;
+            let pyodide = await loadPyodide();
+            await pyodide.loadPackage(["micropip"]);
+            await pyodide.runPythonAsync(`
+                from voice_assistant import speak
+                speak("${text}")
+            `);
+        }
+    </script>
+</body>
+</html>
