@@ -153,7 +153,7 @@ def email_assistant():
             
 
 def get_news():
-    api_key = "aee28e8736ad4aab896c56fb2f3593d8" 
+    api_key = "there also put tou api key" 
     url = f"https://newsapi.org/v2/top-headlines?country=in&apiKey={api_key}"
     response = requests.get(url).json()
 
@@ -166,7 +166,7 @@ def get_news():
         speak("Sorry, I couldn't fetch the news at the moment.")
 
 def get_weather(city="Delhi"):
-    api_key = "90e187b1983f4d3e977103649252403"  
+    api_key = "also here"  
     url = f"http://api.openweathermap.org/data/2.5/weather?q={quote(city)}&appid={api_key}&units=metric"
     response = requests.get(url).json()
 
